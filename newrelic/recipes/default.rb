@@ -7,8 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
-if node["opsworks"]["instance"]["hostname"] == "ip-10-0-134-49"
+if node["opsworks"]["instance"]["hostname"] == "web002"
 
+ # rpm
  remote_file "#{Chef::Config[:file_cache_path]}/newrelic-repo-5-3.noarch.rpm" do
     source "http://yum.newrelic.com/pub/newrelic/el5/x86_64/newrelic-repo-5-3.noarch.rpm"
     not_if "rpm -qa | grep -q '^newrelic-repo'"
@@ -21,12 +22,22 @@ if node["opsworks"]["instance"]["hostname"] == "ip-10-0-134-49"
     action :nothing
  end
 
+ # yum
  yum_package "newrelic-php5" do
     action :install
  end
 
+ # newrelic install
  bash 'newrelic-install' do
     command 'newrelic-install install'
  end
+
+ # newrelic.ini
+ template '/etc/td-agent/td-agent.conf' do
+    source 'td-agent.conf-split.erb'
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
 
 end
