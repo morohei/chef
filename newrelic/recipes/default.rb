@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-if node["opsworks"]["instance"]["hostname"] == node['newrelic']['hostname']
+if node["opsworks"]["instance"]["hostname"] == node["newrelic"]["hostname"]
 
  # rpm
  remote_file "#{Chef::Config[:file_cache_path]}/newrelic-repo-5-3.noarch.rpm" do
