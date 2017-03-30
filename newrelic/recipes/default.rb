@@ -33,7 +33,7 @@ if node["hostname"] == node["newrelic"]["hostname"]
  end
 
  # newrelic.ini
- template '/root' do
+ template '/root/test-new' do
     source 'newrelic.ini.erb'
     owner 'root'
     group 'root'
