@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-if node["opsworks"]["instance"]["hostname"] == "web002"
+if node["opsworks"]["instance"]["hostname"] == node['newrelic']['hostname']
 
  # rpm
  remote_file "#{Chef::Config[:file_cache_path]}/newrelic-repo-5-3.noarch.rpm" do
@@ -33,11 +33,11 @@ if node["opsworks"]["instance"]["hostname"] == "web002"
  end
 
  # newrelic.ini
- template '/etc/td-agent/td-agent.conf' do
-    source 'td-agent.conf-split.erb'
+ template '/root' do
+    source 'newrelic.ini.erb'
     owner 'root'
     group 'root'
     mode '0644'
-  end
+ end
 
 end
