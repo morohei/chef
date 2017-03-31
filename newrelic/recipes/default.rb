@@ -29,12 +29,19 @@ if node["hostname"] == node["newrelic"]["hostname"]
 
   # newrelic install
   bash 'license-install' do
-    command 'nrsysmond-config --set license_key= node[newrelic][license]'
+    command 'nrsysmond-config --set license_key=' node[newrelic][license]
   end
 
   service "newrelic-sysmond" do
      action [:enable, :start] 
   end
 
+#  service "nginx" do
+#     action [:restart]
+#  end
+
+#  service "httpd" do
+#     action [:restart]
+#  end
 
 end
