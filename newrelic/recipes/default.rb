@@ -7,6 +7,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
+license ="#{node['newrelic']['license']}"
+
 if node["hostname"] == node["newrelic"]["hostname"]
 
  # rpm
@@ -29,7 +31,7 @@ if node["hostname"] == node["newrelic"]["hostname"]
 
   # newrelic install
   bash 'license-install' do
-    command "nrsysmond-config --set license_key=#{node['newrelic']['license']}"
+    command nrsysmond-config --set license_key=#{license}
   end
 
   service "newrelic-sysmond" do
