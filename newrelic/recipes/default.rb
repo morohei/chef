@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-license ="#{node['newrelic']['license']}"
+newrelic-license ="#{node['newrelic']['newrelic-license']}"
 
 if node["hostname"] == node["newrelic"]["hostname"]
 
@@ -32,7 +32,7 @@ if node["hostname"] == node["newrelic"]["hostname"]
   # newrelic install
   execute "newrelic-install" do
     command <<-EOH
-     nrsysmond-config --set license_key=#{license}
+     nrsysmond-config --set license_key=#{newrelic-license}
     EOH
   end
 
