@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-newrelic-license ="#{node['newrelic']['newrelic-license']}"
+php_path ="#{node['newrelic']['php_path']}"
 
 if node["hostname"] == node["newrelic"]["hostname"]
 
@@ -24,28 +24,39 @@ if node["hostname"] == node["newrelic"]["hostname"]
     action :nothing
  end
 
-  # yum
-  yum_package "newrelic-sysmond" do
+ yum_package "newrelic-php5" do
     action :install
+ end
+
+  template "/etc/newrelic/newrelic.cfg" do
+    source "newrelic.cfg.erb"
+    mode  644
+    owner "root"
+    group "root"
+    action :create
   end
 
-  # newrelic install
-  execute "newrelic-install" do
+  execute "newrelic-php-install" do
     command <<-EOH
-     nrsysmond-config --set license_key=#{newrelic-license}
+     newrelic-install install
     EOH
   end
 
-  service "newrelic-sysmond" do
-     action [:enable, :start] 
+  template "#{php_path}" do
+    source "newrelic.ini.erb"
+    mode  644
+    owner "root"
+    group "root"
+    action :create
   end
 
-#  service "nginx" do
-#     action [:restart]
-#  end
 
-#  service "httpd" do
-#     action [:restart]
-#  end
+  #service "php70-php-fpm" do
+  #   action [:restart]
+  #end
+
+  #service "nginx" do
+  #   action [:restart]
+  #end
 
 end

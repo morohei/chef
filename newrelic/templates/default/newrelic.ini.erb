@@ -1,2 +1,6 @@
-test
-newrelic.license= "<%= node['newrelic']['license'] %>"
+extension = "newrelic.so"
+[newrelic]
+newrelic.license = "<%= node['newrelic']['license'] %>"
+newrelic.logfile = "/var/log/newrelic/php_agent.log"
+newrelic.appname = "<%= node['newrelic']['appname'] %>"
+newrelic.daemon.logfile = "/var/log/newrelic/newrelic-daemon.log"
