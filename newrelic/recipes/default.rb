@@ -22,22 +22,19 @@ if node["hostname"] == node["newrelic"]["hostname"]
     action :nothing
  end
 
- # yum
- yum_package "newrelic-php5" do
+  # yum
+  yum_package "newrelic-sysmond" do
     action :install
- end
+  end
 
- # newrelic install
- bash 'newrelic-install' do
-    command 'newrelic-install install'
- end
+  # newrelic install
+  bash 'license-install' do
+    command 'nrsysmond-config --set license_key= node[newrelic][license]'
+  end
 
- # newrelic.ini
- template 'node[newrelic][conf-path]' do
-    source 'newrelic.ini.erb'
-    owner 'root'
-    group 'root'
-    mode '0644'
- end
+  service "newrelic-sysmond" do
+     action [:enable, :start] 
+  end
+
 
 end
